@@ -1,7 +1,7 @@
 {
 	"name": "japanese-word-handler",
 	"displayName": "Japanese Word Handler",
-	"description": "Better word handling for Japanese",
+	"description": "Better Japanese word handling on cursor movement",
 	"version": "0.0.1",
 	"publisher": "sgryjp",
 	"engines": {
@@ -10,15 +10,24 @@
 	"categories": [
 		"Other"
 	],
+    "license": "Zlib",
 	"activationEvents": [
-		"onCommand:extension.sayHello"
+		"onCommand:extension.cursorNextWordEndJa",
+		"onCommand:extension.cursorPrevWordStartJa"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
-		"commands": [{
-			"command": "extension.sayHello",
-			"title": "Hello World"
-		}]
+        "keybindings": [{
+            "command": "extension.cursorNextWordEndJa",
+            "key": "ctrl+right",
+            "mac": "option+right",
+            "when": "editorTextFocus"
+        }, {
+            "command": "extension.cursorPrevWordStartJa",
+            "key": "ctrl+left",
+            "mac": "option+left",
+            "when": "editorTextFocus"
+        }]
 	},
 	"scripts": {
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
