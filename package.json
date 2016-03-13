@@ -14,7 +14,8 @@
 	"activationEvents": [
 		"onCommand:extension.cursorNextWordEndJa",
 		"onCommand:extension.cursorNextWordEndSelectJa",
-		"onCommand:extension.cursorPrevWordStartJa"
+		"onCommand:extension.cursorPrevWordStartJa",
+        "onCommand:extension.cursorPrevWordStartSelectJa"
 	],
 	"main": "./out/src/extension",
 	"contributes": {
@@ -32,6 +33,11 @@
             "command": "extension.cursorPrevWordStartJa",
             "key": "ctrl+left",
             "mac": "option+left",
+            "when": "editorTextFocus"
+        }, {
+            "command": "extension.cursorPrevWordStartSelectJa",
+            "key": "ctrl+shift+left",
+            "mac": "option+shift+left",
             "when": "editorTextFocus"
         }]
 	},
