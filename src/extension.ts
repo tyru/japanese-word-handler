@@ -134,6 +134,19 @@ function classifyChar(doc: vscode.TextDocument, position: vscode.Position) {
         || (0xff41 <= ch && ch <= 0xff5a) ) // fullwidth alphabet, lower case
         return CharClass.Alnum;
 
+    if( (0x21 <= ch && ch <= 0x2f)
+        || (0x3a <= ch && ch <= 0x40)
+        || (0x5b <= ch && ch <= 0x60)
+        || (0x7b <= ch && ch <= 0x7f)
+        || (0x3001 <= ch && ch <= 0x303f
+           && ch != 0x3005)                 // CJK punctuation marks except Ideographic iteration mark
+        || ch == 0x30fb                     // Katakana middle dot
+        || (0xff01 <= ch && ch <= 0xff0f)   // "Full width" forms (1)
+        || (0xff1a <= ch && ch <= 0xff20)   // "Full width" forms (2)
+        || (0xff3b <= ch && ch <= 0xff40)   // "Full width" forms (3)
+        || (0xff5b <= ch && ch <= 0xff65)   // "Full width" forms (4)
+        || (0xffe0 <= ch && ch <= 0xffee) ) // "Full width" forms (5)
+        return CharClass.Punctuation; 
 
     if( (0x30a0 <= ch && ch <= 0x30ff)      // fullwidth katakana
         && ch != 0x30fb )                   // excluding katakana middle dot
