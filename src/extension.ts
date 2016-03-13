@@ -134,12 +134,13 @@ function classifyChar(doc: vscode.TextDocument, position: vscode.Position) {
         || (0xff41 <= ch && ch <= 0xff5a) ) // fullwidth alphabet, lower case
         return CharClass.Alnum;
 
-    if( 0x09 <= ch && ch <= 0x0d )          // fullwidth hiragana
-        return CharClass.Hiragana;
 
     if( (0x30a0 <= ch && ch <= 0x30ff)      // fullwidth katakana
         && ch != 0x30fb )                   // excluding katakana middle dot
         return CharClass.Katakana;
+
+    if( 0x3041 <= ch && ch <= 0x309f )      // fullwidth hiragana
+        return CharClass.Hiragana;
 
     if( 0xff66 <= ch && ch <= 0xff9d )      // halfwidth katakana
         return CharClass.Katakana;
