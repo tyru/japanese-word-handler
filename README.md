@@ -47,4 +47,9 @@ As of VSCode 0.10.10, extension cannot override word related actions below:
 * Automatic highlight of a word at where the cursor is
 * 'Match Whole Word' option of text search
 
-** Enjoy!**
+## Issue report
+
+Please visit the [project's GitHub page](https://github.com/sgryjp/japanese-word-handler) and .
+
+
+**Enjoy!**
