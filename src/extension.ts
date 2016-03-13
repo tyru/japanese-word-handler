@@ -10,6 +10,11 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(command);
 
+    command = vscode.commands.registerCommand('extension.cursorNextWordEndSelectJa', () => {
+        cursorNextWordEndSelectJa(vscode.window.activeTextEditor);
+    });
+    context.subscriptions.push(command);
+
     command = vscode.commands.registerCommand('extension.cursorPrevWordStartJa', () => {
         cursorPrevWordStartJa(vscode.window.activeTextEditor);
     });
@@ -20,6 +25,12 @@ export function activate(context: vscode.ExtensionContext) {
 export function cursorNextWordEndJa(editor: vscode.TextEditor) {
     let pos = positionOfNextWordEnd(editor.document, caretPositionOf(editor));
     editor.selections = [new vscode.Selection(pos, pos)];
+}
+
+export function cursorNextWordEndSelectJa(editor: vscode.TextEditor) {
+    const anchorPos = editor.selection.anchor;
+    const pos = positionOfNextWordEnd(editor.document, caretPositionOf(editor));
+    editor.selections = [new vscode.Selection(anchorPos, pos)];
 }
 
 export function cursorPrevWordStartJa(editor: vscode.TextEditor) {

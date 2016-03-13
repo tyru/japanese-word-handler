@@ -13,6 +13,7 @@
     "license": "Zlib",
 	"activationEvents": [
 		"onCommand:extension.cursorNextWordEndJa",
+		"onCommand:extension.cursorNextWordEndSelectJa",
 		"onCommand:extension.cursorPrevWordStartJa"
 	],
 	"main": "./out/src/extension",
@@ -21,6 +22,11 @@
             "command": "extension.cursorNextWordEndJa",
             "key": "ctrl+right",
             "mac": "option+right",
+            "when": "editorTextFocus"
+        }, {
+            "command": "extension.cursorNextWordEndSelectJa",
+            "key": "ctrl+shift+right",
+            "mac": "option+shift+right",
             "when": "editorTextFocus"
         }, {
             "command": "extension.cursorPrevWordStartJa",
