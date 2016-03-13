@@ -28,7 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 //-------------------------------------------------------------------------------------------------
 export function cursorNextWordEndJa(editor: vscode.TextEditor) {
-    let pos = positionOfNextWordEnd(editor.document, caretPositionOf(editor));
+    const pos = positionOfNextWordEnd(editor.document, caretPositionOf(editor));
     editor.selections = [new vscode.Selection(pos, pos)];
 }
 
@@ -39,7 +39,7 @@ export function cursorNextWordEndSelectJa(editor: vscode.TextEditor) {
 }
 
 export function cursorPrevWordStartJa(editor: vscode.TextEditor) {
-    let pos = positionOfPrevWordStart(editor.document, caretPositionOf(editor));
+    const pos = positionOfPrevWordStart(editor.document, caretPositionOf(editor));
     editor.selections = [new vscode.Selection(pos, pos)];
 }
 
@@ -61,7 +61,7 @@ enum CharClass {
 }
 
 function isPrevCharIsSpace(doc: vscode.TextDocument, position: vscode.Position) {
-    let prevPos = doc.positionAt( doc.offsetAt(position) - 1 );
+    const prevPos = doc.positionAt( doc.offsetAt(position) - 1 );
     return (classifyChar(doc, prevPos) == CharClass.Whitespace);
 }
 
@@ -134,12 +134,12 @@ function positionOfPrevWordStart(doc: vscode.TextDocument, caretPos: vscode.Posi
 }
 
 function classifyChar(doc: vscode.TextDocument, position: vscode.Position) {
-    let range = new vscode.Range(position.line, position.character,
-                            position.line, position.character + 1);
-    let text = doc.getText(range);
+    const range = new vscode.Range(position.line, position.character,
+                                   position.line, position.character + 1);
+    const text = doc.getText(range);
     if( text.length == 0 )
         return CharClass.Invalid;           // beyond an end-of-line / an end-of-document.
-    let ch = text.charCodeAt(0);
+    const ch = text.charCodeAt(0);
 
     if( (0x09 <= ch && ch <= 0x0d) || ch == 0x20 || ch == 0x3000 )
         return CharClass.Whitespace;
