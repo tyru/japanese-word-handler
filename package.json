@@ -22,22 +22,22 @@
         "keybindings": [{
             "command": "extension.cursorNextWordEndJa",
             "key": "ctrl+right",
-            "mac": "option+right",
+            "mac": "alt+right",
             "when": "editorTextFocus"
         }, {
             "command": "extension.cursorNextWordEndSelectJa",
             "key": "ctrl+shift+right",
-            "mac": "option+shift+right",
+            "mac": "alt+shift+right",
             "when": "editorTextFocus"
         }, {
             "command": "extension.cursorPrevWordStartJa",
             "key": "ctrl+left",
-            "mac": "option+left",
+            "mac": "alt+left",
             "when": "editorTextFocus"
         }, {
             "command": "extension.cursorPrevWordStartSelectJa",
             "key": "ctrl+shift+left",
-            "mac": "option+shift+left",
+            "mac": "alt+shift+left",
             "when": "editorTextFocus"
         }]
 	},
