@@ -4,6 +4,10 @@
     "description": "Better Japanese word handling on cursor movement",
     "version": "0.5.1",
     "publisher": "sgryjp",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sgryjp/japanese-word-handler.git"
+    },
     "engines": {
         "vscode": "^0.10.10"
     },
