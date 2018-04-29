@@ -57,6 +57,7 @@ enum CharClass {
     Hiragana,
     Katakana,
     Other,
+    Separator,
     Invalid
 }
 
@@ -140,6 +141,11 @@ function classifyChar(doc: vscode.TextDocument, position: vscode.Position) {
     if( text.length == 0 )
         return CharClass.Invalid;           // beyond an end-of-line / an end-of-document.
     const ch = text.charCodeAt(0);
+
+    const wordSeparators = vscode.workspace.getConfiguration().get('editor.wordSeparators') as String;
+    if (wordSeparators.indexOf(text) !== -1) {
+        return CharClass.Separator;
+    }
 
     if( (0x09 <= ch && ch <= 0x0d) || ch == 0x20 || ch == 0x3000 )
         return CharClass.Whitespace;
