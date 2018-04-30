@@ -1,4 +1,4 @@
-// 
+//
 // Note: This example test is leveraging the Mocha test framework.
 // Please refer to their documentation on https://mochajs.org/ for help.
 //
@@ -9,7 +9,7 @@ import * as assert from 'assert';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 import * as vscode from 'vscode';
-import * as myExtension from '../src/extension';
+import * as myExtension from '../extension';
 
 function setText(editor:vscode.TextEditor, text:string) {
     return editor.edit((editBuilder: vscode.TextEditorEdit)=>{
@@ -26,7 +26,7 @@ function setText(editor:vscode.TextEditor, text:string) {
 suite("Extension Tests", () => {
 
     test("cursorNextWordEndJa", () => {
-        const editor = vscode.window.activeTextEditor;
+        const editor = vscode.window.activeTextEditor!;
 
         setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success:boolean) => {
             editor.selections = [new vscode.Selection(0, 0, 0, 0)];
@@ -60,7 +60,7 @@ suite("Extension Tests", () => {
     });
 
     test("cursorPrevWordStartJa", () => {
-        const editor = vscode.window.activeTextEditor;
+        const editor = vscode.window.activeTextEditor!;
 
         setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success:boolean) => {
             editor.selections = [new vscode.Selection(0, 0, 0, 0)];
