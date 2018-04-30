@@ -61,11 +61,6 @@ enum CharClass {
     Invalid
 }
 
-function isPrevCharIsSpace(doc: vscode.TextDocument, position: vscode.Position) {
-    const prevPos = doc.positionAt(doc.offsetAt(position) - 1);
-    return (classifyChar(doc, prevPos) === CharClass.Whitespace);
-}
-
 function caretPositionOf(editor: vscode.TextEditor) {
     return editor.selection.isReversed ? editor.selection.start
         : editor.selection.end;
@@ -110,7 +105,7 @@ function positionOfNextWordEnd(doc: vscode.TextDocument, caretPos: vscode.Positi
 function positionOfPrevWordStart(doc: vscode.TextDocument, caretPos: vscode.Position) {
     // Firstly skip whitespaces, excluding EOL codes. 
     let pos = caretPos;
-    while (isPrevCharIsSpace(doc, pos)) {
+    while ((classifyChar(doc, doc.positionAt(doc.offsetAt(pos) - 1)) === CharClass.Whitespace)) {
         // Intentionally avoiding to use doc.positionAt(doc.offsetAt())
         // so that the seek stops at the EOL.
         pos = new vscode.Position(pos.line, pos.character - 1);
