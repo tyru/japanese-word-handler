@@ -9,7 +9,7 @@ import * as vscode from 'vscode';
 
 import * as myExtension from '../extension';
 
-function setText(editor: vscode.TextEditor, text: string) {
+async function setText(editor: vscode.TextEditor, text: string) {
     return editor.edit((editBuilder: vscode.TextEditorEdit) => {
         const doc = editor.document;
         const startPos = new vscode.Position(0, 0);
@@ -39,74 +39,74 @@ suite("Extension Tests", () => {
         fs.unlinkSync(tempFilePath(".txt"));
     });
 
-    test("cursorNextWordEndJa", () => {
+    test("cursorNextWordEndJa", async () => {
         const editor = vscode.window.activeTextEditor!;
 
-        setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success: boolean) => {
+        await setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success: boolean) => {
             editor.selections = [new vscode.Selection(0, 0, 0, 0)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(3, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 3, 0, 3)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(8, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 4, 0, 4)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(8, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 8, 0, 8)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(11, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 11, 0, 11)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(13, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 13, 0, 13)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(15, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 15, 0, 15)];
-            myExtension.cursorNextWordEndJa(editor);
+            myExtension.cursorNextWordEndJa(editor, "");
             assert.equal(15, editor.selection.active.character);
         });
     });
 
-    test("cursorPrevWordStartJa", () => {
+    test("cursorPrevWordStartJa", async () => {
         const editor = vscode.window.activeTextEditor!;
 
-        setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success: boolean) => {
+        await setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success: boolean) => {
             editor.selections = [new vscode.Selection(0, 0, 0, 0)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(0, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 4, 0, 4)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(0, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 5, 0, 5)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(0, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 6, 0, 6)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(5, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 9, 0, 9)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(5, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 10, 0, 10)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(9, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 12, 0, 12)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(11, editor.selection.active.character);
 
             editor.selections = [new vscode.Selection(0, 15, 0, 15)];
-            myExtension.cursorPrevWordStartJa(editor);
+            myExtension.cursorPrevWordStartJa(editor, "");
             assert.equal(13, editor.selection.active.character);
         });
     });
