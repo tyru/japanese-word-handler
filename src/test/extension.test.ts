@@ -1,14 +1,12 @@
-//
-// Note: This example test is leveraging the Mocha test framework.
-// Please refer to their documentation on https://mochajs.org/ for help.
-//
+// Note: This test is leveraging the Mocha test framework (https://mochajs.org/)
 
-// The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
+import * as fs from 'fs';
+import * as os from 'os';
+import * as path from 'path';
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
+
 import * as myExtension from '../extension';
 
 function setText(editor: vscode.TextEditor, text: string) {
@@ -24,6 +22,22 @@ function setText(editor: vscode.TextEditor, text: string) {
 
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", () => {
+
+    function tempFilePath(extension: string) {
+        return path.join(os.tmpdir(), "japanese-word-handler.test" + extension);
+    }
+
+    suiteSetup(async () => {
+        const fileName = tempFilePath(".txt");
+        fs.writeFileSync(fileName, "");
+        const doc = await vscode.workspace.openTextDocument(fileName);
+        await vscode.window.showTextDocument(doc);
+    });
+
+    suiteTeardown(async () => {
+        await vscode.commands.executeCommand("workbench.action.closeAllEditors");
+        fs.unlinkSync(tempFilePath(".txt"));
+    });
 
     test("cursorNextWordEndJa", () => {
         const editor = vscode.window.activeTextEditor!;
