@@ -1,11 +1,13 @@
 'use strict';
+
 import * as vscode from 'vscode';
+import { Position, Range, Selection, TextDocument, TextEditor } from 'vscode';
 
 //-----------------------------------------------------------------------------
 export function activate(context: vscode.ExtensionContext) {
     let command;
 
-    function getWordSeparator(editor: vscode.TextEditor) {
+    function getWordSeparator(editor: TextEditor) {
         return vscode.workspace
             .getConfiguration("editor", editor.document.uri)
             .get("wordSeparators") as string;
@@ -50,18 +52,18 @@ export function activate(context: vscode.ExtensionContext) {
 
 //-----------------------------------------------------------------------------
 export function cursorNextWordEndJa(
-    editor: vscode.TextEditor,
+    editor: TextEditor,
     wordSeparators: string
 ) {
     const pos = positionOfNextWordEnd(
         editor.document,
         caretPositionOf(editor),
         wordSeparators);
-    editor.selections = [new vscode.Selection(pos, pos)];
+    editor.selections = [new Selection(pos, pos)];
 }
 
 export function cursorNextWordEndSelectJa(
-    editor: vscode.TextEditor,
+    editor: TextEditor,
     wordSeparators: string
 ) {
     const anchorPos = editor.selection.anchor;
@@ -69,22 +71,22 @@ export function cursorNextWordEndSelectJa(
         editor.document,
         caretPositionOf(editor),
         wordSeparators);
-    editor.selections = [new vscode.Selection(anchorPos, pos)];
+    editor.selections = [new Selection(anchorPos, pos)];
 }
 
 export function cursorPrevWordStartJa(
-    editor: vscode.TextEditor,
+    editor: TextEditor,
     wordSeparators: string
 ) {
     const pos = positionOfPrevWordStart(
         editor.document,
         caretPositionOf(editor),
         wordSeparators);
-    editor.selections = [new vscode.Selection(pos, pos)];
+    editor.selections = [new Selection(pos, pos)];
 }
 
 export function cursorPrevWordStartSelectJa(
-    editor: vscode.TextEditor,
+    editor: TextEditor,
     wordSeparators: string
 ) {
     const anchorPos = editor.selection.anchor;
@@ -92,7 +94,7 @@ export function cursorPrevWordStartSelectJa(
         editor.document,
         caretPositionOf(editor),
         wordSeparators);
-    editor.selections = [new vscode.Selection(anchorPos, pos)];
+    editor.selections = [new Selection(anchorPos, pos)];
 }
 
 //-----------------------------------------------------------------------------
@@ -107,15 +109,15 @@ enum CharClass {
     Invalid
 }
 
-function caretPositionOf(editor: vscode.TextEditor) {
+function caretPositionOf(editor: TextEditor) {
     return editor.selection.isReversed
         ? editor.selection.start
         : editor.selection.end;
 }
 
 function positionOfNextWordEnd(
-    doc: vscode.TextDocument,
-    caretPos: vscode.Position,
+    doc: TextDocument,
+    caretPos: Position,
     wordSeparators: string
 ) {
     // Create a character classifier function
@@ -128,13 +130,13 @@ function positionOfNextWordEnd(
         do {
             // Intentionally avoiding to use doc.positionAt(doc.offsetAt())
             // so that the seek stops at the EOL.
-            pos = new vscode.Position(pos.line, pos.character + 1);
+            pos = new Position(pos.line, pos.character + 1);
         }
         while (classify(doc, pos) === CharClass.Whitespace);
     }
     else if (klass === CharClass.Invalid) {
         if (pos.line + 1 < doc.lineCount) {
-            return new vscode.Position(pos.line + 1, 0); // Beginning of the next line. 
+            return new Position(pos.line + 1, 0); // Beginning of the next line. 
         }
         else {
             return pos; // Already at the EOF.
@@ -157,8 +159,8 @@ function positionOfNextWordEnd(
 }
 
 function positionOfPrevWordStart(
-    doc: vscode.TextDocument,
-    caretPos: vscode.Position,
+    doc: TextDocument,
+    caretPos: Position,
     wordSeparators: string
 ) {
     // Create a character classifier function
@@ -173,7 +175,7 @@ function positionOfPrevWordStart(
     while (prevCharIsWhitespace()) {
         // Intentionally avoiding to use doc.positionAt(doc.offsetAt())
         // so that the seek stops at the EOL.
-        pos = new vscode.Position(pos.line, pos.character - 1);
+        pos = new Position(pos.line, pos.character - 1);
     }
 
     // Then, seek until the character type changes.
@@ -194,10 +196,10 @@ function positionOfPrevWordStart(
 
 function makeClassifier(wordSeparators: string) {
     return function classifyChar(
-        doc: vscode.TextDocument,
-        position: vscode.Position
+        doc: TextDocument,
+        position: Position
     ) {
-        const range = new vscode.Range(
+        const range = new Range(
             position.line, position.character,
             position.line, position.character + 1
         );
