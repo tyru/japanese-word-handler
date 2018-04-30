@@ -11,11 +11,11 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as myExtension from '../extension';
 
-function setText(editor:vscode.TextEditor, text:string) {
-    return editor.edit((editBuilder: vscode.TextEditorEdit)=>{
+function setText(editor: vscode.TextEditor, text: string) {
+    return editor.edit((editBuilder: vscode.TextEditorEdit) => {
         const doc = editor.document;
         const startPos = new vscode.Position(0, 0);
-        const lastLine = doc.lineAt( doc.lineCount - 1 );
+        const lastLine = doc.lineAt(doc.lineCount - 1);
         const endPos = lastLine.range.end;
         const entireRange = new vscode.Range(startPos, endPos);
         editBuilder.replace(entireRange, text);
@@ -28,7 +28,7 @@ suite("Extension Tests", () => {
     test("cursorNextWordEndJa", () => {
         const editor = vscode.window.activeTextEditor!;
 
-        setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success:boolean) => {
+        setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success: boolean) => {
             editor.selections = [new vscode.Selection(0, 0, 0, 0)];
             myExtension.cursorNextWordEndJa(editor);
             assert.equal(3, editor.selection.active.character);
@@ -62,7 +62,7 @@ suite("Extension Tests", () => {
     test("cursorPrevWordStartJa", () => {
         const editor = vscode.window.activeTextEditor!;
 
-        setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success:boolean) => {
+        setText(editor, "aB_ \tＣd＿ あいアイ相愛").then((success: boolean) => {
             editor.selections = [new vscode.Selection(0, 0, 0, 0)];
             myExtension.cursorPrevWordStartJa(editor);
             assert.equal(0, editor.selection.active.character);
