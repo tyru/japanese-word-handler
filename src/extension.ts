@@ -6,22 +6,22 @@ export function activate(context: vscode.ExtensionContext) {
     let command;
 
     command = vscode.commands.registerCommand('extension.cursorNextWordEndJa', () => {
-        cursorNextWordEndJa(vscode.window.activeTextEditor);
+        cursorNextWordEndJa(vscode.window.activeTextEditor!);
     });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand('extension.cursorNextWordEndSelectJa', () => {
-        cursorNextWordEndSelectJa(vscode.window.activeTextEditor);
+        cursorNextWordEndSelectJa(vscode.window.activeTextEditor!);
     });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand('extension.cursorPrevWordStartJa', () => {
-        cursorPrevWordStartJa(vscode.window.activeTextEditor);
+        cursorPrevWordStartJa(vscode.window.activeTextEditor!);
     });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand('extension.cursorPrevWordStartSelectJa', () => {
-        cursorPrevWordStartSelectJa(vscode.window.activeTextEditor);
+        cursorPrevWordStartSelectJa(vscode.window.activeTextEditor!);
     });
     context.subscriptions.push(command);
 }
