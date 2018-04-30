@@ -21,7 +21,7 @@
         "onCommand:extension.cursorPrevWordStartJa",
         "onCommand:extension.cursorPrevWordStartSelectJa"
     ],
-    "main": "./out/src/extension",
+    "main": "./out/extension",
     "contributes": {
         "keybindings": [
             {
