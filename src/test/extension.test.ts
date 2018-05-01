@@ -13,7 +13,8 @@ import * as myExtension from '../extension';
 
 
 suite("japanese-word-handler", () => {
-    // Prepare utility functions
+    // Prepare utility functions and constants
+    const standardWordSeparators = "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?";
     const unlink = promisify(fs_unlink);
     const writeFile = promisify<void, string, any>(fs_writeFile);
     const tempFilePath = function (extension: string) {
@@ -47,36 +48,36 @@ suite("japanese-word-handler", () => {
 
         test("basic", async () => {
             const editor = vscode.window.activeTextEditor!;
-            const wordSeparators = "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?";
+            const separators = standardWordSeparators;
             let success = await setText(editor, "aB_ \tＣd＿ あいアイ相愛");
             assert.ok(success);
 
             editor.selections = [new Selection(0, 0, 0, 0)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 3);
 
             editor.selections = [new Selection(0, 3, 0, 3)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 8);
 
             editor.selections = [new Selection(0, 4, 0, 4)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 8);
 
             editor.selections = [new Selection(0, 8, 0, 8)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 11);
 
             editor.selections = [new Selection(0, 11, 0, 11)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 13);
 
             editor.selections = [new Selection(0, 13, 0, 13)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 15);
 
             editor.selections = [new Selection(0, 15, 0, 15)];
-            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            myExtension.cursorNextWordEndJa(editor, separators);
             assert.equal(editor.selection.active.character, 15);
         });
     });
@@ -85,40 +86,40 @@ suite("japanese-word-handler", () => {
 
         test("basic", async () => {
             const editor = vscode.window.activeTextEditor!;
-            const wordSeparators = "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?";
+            const separators = standardWordSeparators;
             let success = await setText(editor, "aB_ \tＣd＿ あいアイ相愛");
             assert.ok(success);
 
             editor.selections = [new Selection(0, 0, 0, 0)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 0);
 
             editor.selections = [new Selection(0, 4, 0, 4)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 0);
 
             editor.selections = [new Selection(0, 5, 0, 5)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 0);
 
             editor.selections = [new Selection(0, 6, 0, 6)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 5);
 
             editor.selections = [new Selection(0, 9, 0, 9)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 5);
 
             editor.selections = [new Selection(0, 10, 0, 10)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 9);
 
             editor.selections = [new Selection(0, 12, 0, 12)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 11);
 
             editor.selections = [new Selection(0, 15, 0, 15)];
-            myExtension.cursorPrevWordStartJa(editor, wordSeparators);
+            myExtension.cursorPrevWordStartJa(editor, separators);
             assert.equal(editor.selection.active.character, 13);
         });
     });
