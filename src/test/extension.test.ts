@@ -121,15 +121,6 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 0);
             });
 
-        test("motion: should stay put safely on end-of-document",
-            async () => {
-                const editor = vscode.window.activeTextEditor!;
-                const cursorPos = await testSingleCursorMotion(editor, "",
-                    "");
-                assert.equal(cursorPos.line, 0);
-                assert.equal(cursorPos.character, 0);
-            });
-
         test("motion: should stop on char-class change (alnum -> punctuation)",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
@@ -162,6 +153,15 @@ suite("japanese-word-handler", () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
                     "", "カナ漢字");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 2);
+            });
+
+        test("motion: should stop on char-class change (other -> WSP)",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "漢字\t ");
                 assert.equal(cursorPos.line, 0);
                 assert.equal(cursorPos.character, 2);
             });
