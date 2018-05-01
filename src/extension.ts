@@ -57,7 +57,7 @@ export function cursorNextWordEndJa(
 ) {
     const pos = positionOfNextWordEnd(
         editor.document,
-        caretPositionOf(editor),
+        editor.selection.active,
         wordSeparators);
     editor.selections = [new Selection(pos, pos)];
 }
@@ -69,7 +69,7 @@ export function cursorNextWordEndSelectJa(
     const anchorPos = editor.selection.anchor;
     const pos = positionOfNextWordEnd(
         editor.document,
-        caretPositionOf(editor),
+        editor.selection.active,
         wordSeparators);
     editor.selections = [new Selection(anchorPos, pos)];
 }
@@ -80,7 +80,7 @@ export function cursorPrevWordStartJa(
 ) {
     const pos = positionOfPrevWordStart(
         editor.document,
-        caretPositionOf(editor),
+        editor.selection.active,
         wordSeparators);
     editor.selections = [new Selection(pos, pos)];
 }
@@ -92,7 +92,7 @@ export function cursorPrevWordStartSelectJa(
     const anchorPos = editor.selection.anchor;
     const pos = positionOfPrevWordStart(
         editor.document,
-        caretPositionOf(editor),
+        editor.selection.active,
         wordSeparators);
     editor.selections = [new Selection(anchorPos, pos)];
 }
@@ -107,12 +107,6 @@ enum CharClass {
     Other,
     Separator,
     Invalid
-}
-
-function caretPositionOf(editor: TextEditor) {
-    return editor.selection.isReversed
-        ? editor.selection.start
-        : editor.selection.end;
 }
 
 function positionOfNextWordEnd(
