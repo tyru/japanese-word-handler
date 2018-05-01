@@ -46,40 +46,116 @@ suite("japanese-word-handler", () => {
 
     suite("cursorNextWordEndJa", () => {
 
-        test("basic", async () => {
-            const editor = vscode.window.activeTextEditor!;
-            const separators = standardWordSeparators;
-            let success = await setText(editor, "aB_ \tＣd＿ あいアイ相愛");
-            assert.ok(success);
+        const testSingleCursorMotion = async function (
+            editor: TextEditor,
+            wordSeparators: string,
+            content: string
+        ) {
+            await setText(editor, content);
+            const initPos = new Position(0, 0);
+            editor.selections = [new Selection(initPos, initPos)];
+            myExtension.cursorNextWordEndJa(editor, wordSeparators);
+            return editor.selection.active;
+        };
 
-            editor.selections = [new Selection(0, 0, 0, 0)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 3);
+        test("motion: should skip a WSP at cursor",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", " Foo");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 4);
+            });
 
-            editor.selections = [new Selection(0, 3, 0, 3)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 8);
+        test("motion: should skip multiple WSPs at cursor",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", " \t Foo");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 6);
+            });
 
-            editor.selections = [new Selection(0, 4, 0, 4)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 8);
+        test("motion: should stop at beginning of a line just after an LF",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor, "",
+                    "\norange");
+                assert.equal(cursorPos.line, 1);
+                assert.equal(cursorPos.character, 0);
+            });
 
-            editor.selections = [new Selection(0, 8, 0, 8)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 11);
+        test("motion: should skip only the first LF in a series of LFs",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor, "",
+                    "\n\norange");
+                assert.equal(cursorPos.line, 1);
+                assert.equal(cursorPos.character, 0);
+            });
 
-            editor.selections = [new Selection(0, 11, 0, 11)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 13);
+        test("motion: should stay put safely on end-of-document",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor, "",
+                    "");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 0);
+            });
 
-            editor.selections = [new Selection(0, 13, 0, 13)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 15);
+        test("motion: should stop on charcter class (alnum -> punctuation)",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "HbA1c。");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 5);
+            });
 
-            editor.selections = [new Selection(0, 15, 0, 15)];
-            myExtension.cursorNextWordEndJa(editor, separators);
-            assert.equal(editor.selection.active.character, 15);
-        });
+        test("motion: should stop on charcter class (alnum -> hiragana)",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "HbA1cかな");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 5);
+            });
+
+        test("motion: should stop on charcter class (hiragana -> katakana)",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "かなカナ");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 2);
+            });
+
+        test("motion: should stop on charcter class (katakana -> other)",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "カナ漢字");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 2);
+            });
+
+        test("motion: should stop at EOL",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor, "",
+                    "apple\norange");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 5);
+            });
+
+        test("motion: should stop at EOD",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor, "",
+                    "apple");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 5);
+            });
     });
 
     suite("cursorPrevWordStartJa", () => {
