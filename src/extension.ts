@@ -123,6 +123,7 @@ function positionOfNextWordEnd(
     //   - (at EOL) seeks to the beginning the next line.
     //   - (at EOD) does not move cursor.
     // - If it's a WSP, skips a sequence of WSPs beginning with it.
+    //   - If skipped WSP(s) and reached EOL/EOD, stop seeking.
     // - Secondly, seeks forward until character type changes.
 
     const classify = makeClassifier(wordSeparators);
@@ -157,12 +158,21 @@ function positionOfNextWordEnd(
     return pos;
 }
 
+/**
+ * Gets position of the word before specified position.
+ */
 function positionOfPrevWordStart(
     doc: TextDocument,
     caretPos: Position,
     wordSeparators: string
 ) {
-    // Create a character classifier function
+    // Brief spec of this function:
+    // - Firstly, skips a sequence of WSPs, if there is.
+    //   - If reached start of a line, quit there.
+    // - Secondly, seek backward until:
+    //   1. character type changes, or
+    //   2. reaches start of a line.
+
     const classify = makeClassifier(wordSeparators);
 
     // Firstly skip whitespaces, excluding EOL codes. 

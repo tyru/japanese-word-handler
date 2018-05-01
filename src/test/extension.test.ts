@@ -94,7 +94,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 6);
             });
 
-        test("motion: should stop at EOD after WSPs",
+        test("motion: should stop at end-of-document after skipping WSPs",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
@@ -130,7 +130,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 0);
             });
 
-        test("motion: should stop on charcter class (alnum -> punctuation)",
+        test("motion: should stop on char-class change (alnum -> punctuation)",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
@@ -139,7 +139,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 5);
             });
 
-        test("motion: should stop on charcter class (alnum -> hiragana)",
+        test("motion: should stop on char-class change (alnum -> hiragana)",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
@@ -148,7 +148,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 5);
             });
 
-        test("motion: should stop on charcter class (hiragana -> katakana)",
+        test("motion: should stop on char-class change (hiragana -> katakana)",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
@@ -157,7 +157,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 2);
             });
 
-        test("motion: should stop on charcter class (katakana -> other)",
+        test("motion: should stop on char-class change (katakana -> other)",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
@@ -166,7 +166,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 2);
             });
 
-        test("motion: should stop at EOL",
+        test("motion: should stop at end-of-line",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor, "",
@@ -175,7 +175,7 @@ suite("japanese-word-handler", () => {
                 assert.equal(cursorPos.character, 5);
             });
 
-        test("motion: should stop at EOD",
+        test("motion: should stop at end-of-document",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor, "",
