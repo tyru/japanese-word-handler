@@ -145,12 +145,14 @@ function positionOfNextWordEnd(
         while (classify(doc, pos) === CharClass.Whitespace);
     }
 
-    // Seek until character type changes
+    // Seek until character type changes, unless already reached EOL/EOD
     klass = classify(doc, pos);
-    do {
-        pos = new Position(pos.line, pos.character + 1);
+    if (classify(doc, pos) !== CharClass.Invalid) {
+        do {
+            pos = new Position(pos.line, pos.character + 1);
+        }
+        while (klass === classify(doc, pos));
     }
-    while (klass === classify(doc, pos));
 
     return pos;
 }

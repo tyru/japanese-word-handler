@@ -58,6 +58,24 @@ suite("japanese-word-handler", () => {
             return editor.selection.active;
         };
 
+        test("motion: starting from end-of-document",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 0);
+            });
+
+        test("motion: starting from end-of-line",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", "\n");
+                assert.equal(cursorPos.line, 1);
+                assert.equal(cursorPos.character, 0);
+            });
+
         test("motion: should skip a WSP at cursor",
             async () => {
                 const editor = vscode.window.activeTextEditor!;
@@ -74,6 +92,15 @@ suite("japanese-word-handler", () => {
                     "", " \t Foo");
                 assert.equal(cursorPos.line, 0);
                 assert.equal(cursorPos.character, 6);
+            });
+
+        test("motion: should stop at EOD after WSPs",
+            async () => {
+                const editor = vscode.window.activeTextEditor!;
+                const cursorPos = await testSingleCursorMotion(editor,
+                    "", " ");
+                assert.equal(cursorPos.line, 0);
+                assert.equal(cursorPos.character, 1);
             });
 
         test("motion: should stop at beginning of a line just after an LF",
