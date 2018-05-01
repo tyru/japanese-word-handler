@@ -109,45 +109,48 @@ enum CharClass {
     Invalid
 }
 
+/**
+ * Gets position of the end of a word after specified position.
+ */
 function positionOfNextWordEnd(
     doc: TextDocument,
     caretPos: Position,
     wordSeparators: string
 ) {
-    // Create a character classifier function
+    // Brief spec of this function:
+    // - Firstly gets a character where the cursor is pointing at.
+    // - If no more character is in the line:
+    //   - (at EOL) seeks to the beginning the next line.
+    //   - (at EOD) does not move cursor.
+    // - If it's a WSP, skips a sequence of WSPs beginning with it.
+    // - Secondly, seeks forward until character type changes.
+
     const classify = makeClassifier(wordSeparators);
 
-    // Firstly skip a series of whitespaces, or a series of EOL codes. 
+    // Check if it's already at end-of-line or end-of-document
+    let klass = classify(doc, caretPos);
+    if (klass === CharClass.Invalid) {
+        const nextLine = caretPos.line + 1;
+        return (nextLine < doc.lineCount)
+            ? new Position(nextLine, 0) // end-of-line
+            : caretPos;                 // end-of-document
+    }
+
+    // Skip a series of whitespaces
     let pos = caretPos;
-    let klass = classify(doc, pos);
     if (klass === CharClass.Whitespace) {
         do {
-            // Intentionally avoiding to use doc.positionAt(doc.offsetAt())
-            // so that the seek stops at the EOL.
             pos = new Position(pos.line, pos.character + 1);
         }
         while (classify(doc, pos) === CharClass.Whitespace);
     }
-    else if (klass === CharClass.Invalid) {
-        if (pos.line + 1 < doc.lineCount) {
-            return new Position(pos.line + 1, 0); // Beginning of the next line. 
-        }
-        else {
-            return pos; // Already at the EOF.
-        }
-    }
 
-    // Then, seek until the character type changes.
-    const initKlass = classify(doc, pos);
-    let nextPos = doc.positionAt(doc.offsetAt(pos) + 1);
-    while (nextPos.isAfter(pos)) {
-        if (initKlass !== classify(doc, pos)) {
-            break;
-        }
-
-        pos = nextPos;
-        nextPos = doc.positionAt(doc.offsetAt(pos) + 1);
+    // Seek until character type changes
+    klass = classify(doc, pos);
+    do {
+        pos = new Position(pos.line, pos.character + 1);
     }
+    while (klass === classify(doc, pos));
 
     return pos;
 }
@@ -188,6 +191,11 @@ function positionOfPrevWordStart(
     return pos;
 }
 
+/**
+ * Compose a character classifier function.
+ * @param wordSeparators A string containing characters to separate words
+ *                       (mostly used in English-like language context.)
+ */
 function makeClassifier(wordSeparators: string) {
     return function classifyChar(
         doc: TextDocument,
@@ -199,7 +207,7 @@ function makeClassifier(wordSeparators: string) {
         );
         const text = doc.getText(range);
         if (text.length === 0) {
-            return CharClass.Invalid;           // beyond an end-of-line / an end-of-document.
+            return CharClass.Invalid;  // end-of-line or end-of-document
         }
         const ch = text.charCodeAt(0);
 
