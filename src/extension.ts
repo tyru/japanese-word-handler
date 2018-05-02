@@ -184,6 +184,9 @@ function positionOfPrevWordStart(
     while (prevCharIsWhitespace()) {
         // Intentionally avoiding to use doc.positionAt(doc.offsetAt())
         // so that the seek stops at the EOL.
+        if (pos.character <= 0) {
+            return doc.positionAt(doc.offsetAt(pos) - 1);
+        }
         pos = new Position(pos.line, pos.character - 1);
     }
 

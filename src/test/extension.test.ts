@@ -237,7 +237,6 @@ suite("japanese-word-handler", () => {
 
         test("motion: should stop at start-of-document after skipping WSPs",
             async () => {
-                console.warn("Skipped"); return;  // Issue #3
                 const editor = vscode.window.activeTextEditor!;
                 const cursorPos = await testSingleCursorMotion(editor,
                     "", " ");

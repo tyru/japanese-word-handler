@@ -11,6 +11,10 @@ to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ### Added
 - Respect VSCode's `editor.wordSeparators` configuration
 
+### Fixed
+- Moving cursor with Ctrl+Left over whitespaces at start of a document fails
+  ([Issue #3](https://github.com/sgryjp/japanese-word-handler/issues/3))
+
 ## [0.5.1] - 2018-04-19
 ### Fixed
 - Doesn't work on macOS because of incorrect keybinding settings
