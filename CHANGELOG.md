@@ -7,9 +7,10 @@ The format is based on
 [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) this project adheres
 to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.0.0] - 2018-05-21
 ### Added
-- Respect VSCode's `editor.wordSeparators` configuration
+- Now respects VSCode's `editor.wordSeparators` configuration
+  ([PR #2](https://github.com/sgryjp/japanese-word-handler/pull/2), contribution by [@tekezo](https://github.com/tekezo))
 
 ### Fixed
 - Moving cursor with Ctrl+Left over whitespaces at start of a document fails
