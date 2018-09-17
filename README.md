@@ -2,8 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/eqclfgbaefm5npt8/branch/master?svg=true)](https://ci.appveyor.com/project/sgryjp/japanese-word-handler/branch/master)
 
-This extension provides cursor movement logic which is specifically designed
-for Japanese text.
+An [VS Code](https://code.visualstudio.com) extension providing cursor movement logic which is specifically
+designed for Japanese text.
 
 ## How to activate the logic?
 
