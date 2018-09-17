@@ -1,5 +1,7 @@
 # Japanese Word Handler
 
+[![Build status](https://ci.appveyor.com/api/projects/status/eqclfgbaefm5npt8/branch/master?svg=true)](https://ci.appveyor.com/project/sgryjp/japanese-word-handler/branch/master)
+
 This extension provides cursor movement logic which is specifically designed
 for Japanese text.
 
@@ -25,7 +27,7 @@ it.
           ↓
     吾輩は猫である。‸
 
-With this extension, on the other hand, the cursor will stop at each place where the Japanese character type (Hiragana, Katakana, ...) changes. 
+With this extension, on the other hand, the cursor will stop at each place where the Japanese character type (Hiragana, Katakana, ...) changes.
 
     ‸吾輩は猫である。
           ↓
