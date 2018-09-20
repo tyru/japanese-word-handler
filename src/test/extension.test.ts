@@ -1,11 +1,6 @@
 // Note: This test is leveraging the Mocha test framework (https://mochajs.org/)
 
 import * as assert from 'assert';
-import { unlink as fs_unlink, writeFile as fs_writeFile } from 'fs';
-import { tmpdir } from 'os';
-import { join } from 'path';
-import { promisify } from 'bluebird';
-
 import * as vscode from 'vscode';
 import { Position, Range, Selection, TextEditor, TextEditorEdit } from 'vscode';
 
@@ -14,11 +9,6 @@ import * as myExtension from '../extension';
 
 suite("japanese-word-handler", () => {
     // Prepare utility functions and constants
-    const unlink = promisify(fs_unlink);
-    const writeFile = promisify<void, string, any>(fs_writeFile);
-    const tempFilePath = function (extension: string) {
-        return join(tmpdir(), "japanese-word-handler.test" + extension);
-    };
     const setText = async function (editor: TextEditor, text: string) {
         return editor.edit((editBuilder: TextEditorEdit) => {
             const doc = editor.document;
@@ -31,16 +21,13 @@ suite("japanese-word-handler", () => {
     };
 
     suiteSetup(async () => {
-        const fileName = tempFilePath(".txt");
-        await writeFile(fileName, "");
-        const doc = await vscode.workspace.openTextDocument(fileName);
-        await vscode.window.showTextDocument(doc);
+        const uri = vscode.Uri.parse("untitled:test.txt");
+        await vscode.window.showTextDocument(uri);
     });
 
     suiteTeardown(async () => {
         const commandName = "workbench.action.closeAllEditors";
         await vscode.commands.executeCommand(commandName);
-        await unlink(tempFilePath(".txt"));
     });
 
     suite("cursorNextWordEndJa", () => {
