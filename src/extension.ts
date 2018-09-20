@@ -55,48 +55,42 @@ export function cursorNextWordEndJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
-    const selection = editor.selection;
-    const pos = positionOfNextWordEnd(
-        editor.document,
-        selection.active,
-        wordSeparators);
-    editor.selections = [new Selection(pos, pos)];
+    const document = editor.document;
+    editor.selections = editor.selections
+        .map(s => positionOfNextWordEnd(document, s.active, wordSeparators))
+        .map(p => new Selection(p, p));
 }
 
 export function cursorNextWordEndSelectJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
-    const selection = editor.selection;
-    const pos = positionOfNextWordEnd(
-        editor.document,
-        selection.active,
-        wordSeparators);
-    editor.selections = [new Selection(selection.anchor, pos)];
+    editor.selections = editor.selections
+        .map(s => new Selection(
+            s.anchor,
+            positionOfNextWordEnd(editor.document, s.active, wordSeparators))
+        );
 }
 
 export function cursorPrevWordStartJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
-    const selection = editor.selection;
-    const pos = positionOfPrevWordStart(
-        editor.document,
-        selection.active,
-        wordSeparators);
-    editor.selections = [new Selection(pos, pos)];
+    const document = editor.document;
+    editor.selections = editor.selections
+        .map(s => positionOfPrevWordStart(document, s.active, wordSeparators))
+        .map(p => new Selection(p, p));
 }
 
 export function cursorPrevWordStartSelectJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
-    const selection = editor.selection;
-    const pos = positionOfPrevWordStart(
-        editor.document,
-        selection.active,
-        wordSeparators);
-    editor.selections = [new Selection(selection.anchor, pos)];
+    editor.selections = editor.selections
+        .map(s => new Selection(
+            s.anchor,
+            positionOfPrevWordStart(editor.document, s.active, wordSeparators)
+        ));
 }
 
 //-----------------------------------------------------------------------------
@@ -118,7 +112,7 @@ function positionOfNextWordEnd(
     doc: TextDocument,
     caretPos: Position,
     wordSeparators: string
-) {
+): Position {
     // Brief spec of this function:
     // - Firstly gets a character where the cursor is pointing at.
     // - If no more character is in the line:
