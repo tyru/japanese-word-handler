@@ -55,9 +55,10 @@ export function cursorNextWordEndJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
+    const selection = editor.selection;
     const pos = positionOfNextWordEnd(
         editor.document,
-        editor.selection.active,
+        selection.active,
         wordSeparators);
     editor.selections = [new Selection(pos, pos)];
 }
@@ -66,21 +67,22 @@ export function cursorNextWordEndSelectJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
-    const anchorPos = editor.selection.anchor;
+    const selection = editor.selection;
     const pos = positionOfNextWordEnd(
         editor.document,
-        editor.selection.active,
+        selection.active,
         wordSeparators);
-    editor.selections = [new Selection(anchorPos, pos)];
+    editor.selections = [new Selection(selection.anchor, pos)];
 }
 
 export function cursorPrevWordStartJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
+    const selection = editor.selection;
     const pos = positionOfPrevWordStart(
         editor.document,
-        editor.selection.active,
+        selection.active,
         wordSeparators);
     editor.selections = [new Selection(pos, pos)];
 }
@@ -89,12 +91,12 @@ export function cursorPrevWordStartSelectJa(
     editor: TextEditor,
     wordSeparators: string
 ) {
-    const anchorPos = editor.selection.anchor;
+    const selection = editor.selection;
     const pos = positionOfPrevWordStart(
         editor.document,
-        editor.selection.active,
+        selection.active,
         wordSeparators);
-    editor.selections = [new Selection(anchorPos, pos)];
+    editor.selections = [new Selection(selection.anchor, pos)];
 }
 
 //-----------------------------------------------------------------------------
@@ -175,7 +177,7 @@ function positionOfPrevWordStart(
 
     const classify = makeClassifier(wordSeparators);
 
-    // Firstly skip whitespaces, excluding EOL codes. 
+    // Firstly skip whitespaces, excluding EOL codes.
     function prevCharIsWhitespace() {
         let prevPos = doc.positionAt(doc.offsetAt(pos) - 1);
         return (classify(doc, prevPos) === CharClass.Whitespace);
@@ -239,7 +241,7 @@ function makeClassifier(wordSeparators: string) {
             || (0x41 <= ch && ch <= 0x5a)       // halfwidth alphabet, upper case
             || ch === 0x5f                      // underscore
             || (0x61 <= ch && ch <= 0x7a)       // halfwidth alphabet, lower case
-            || (0xc0 <= ch && ch <= 0xff        // latin character 
+            || (0xc0 <= ch && ch <= 0xff        // latin character
                 && ch !== 0xd7 && ch !== 0xf7)  // (excluding multiplication/division sign)
             || (0xff21 <= ch && ch <= 0xff3a)   // fullwidth alphabet, upper case
             || ch === 0xff3f                    // fullwidth underscore
