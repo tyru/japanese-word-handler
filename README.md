@@ -14,24 +14,25 @@ Better cursor movement in Japanese text for [VS Code](https://code.visualstudio.
 Just install the extension. Doing so changes the action for the keybindings
 below:
 
-* `Ctrl+Right` (or `Option+Right` on OSX)
-* `Ctrl+Left` (or `Option+Left` on OSX)
-* `Ctrl+Shift+Right` (or `Option+Shift+Right` on OSX)
-* `Ctrl+Shift+Left` (or `Option+Shift+Left` on OSX)
+* <kbd>Ctrl+Right</kbd> (or <kbd>Option+Right</kbd> on OSX)
+* <kbd>Ctrl+Left</kbd> (or <kbd>Option+Left</kbd> on OSX)
+* <kbd>Ctrl+Shift+Right</kbd> (or <kbd>Option+Shift+Right</kbd> on OSX)
+* <kbd>Ctrl+Shift+Left</kbd> (or <kbd>Option+Shift+Left</kbd> on OSX)
 
 This extension does not add any command to the command platte.
 
 ## What's the difference from the original?
 
-With the original logic, pressing `Ctrl+Right` while the cursor is at the
-beginning of a chunk of Japanese characters will move the cursor to the end of
-it.
+With the original logic, pressing <kbd>Ctrl+Right</kbd> while the cursor is at
+the beginning of a chunk of Japanese characters will move the cursor to the end
+of it.
 
     ‸吾輩は猫である。
           ↓
     吾輩は猫である。‸
 
-With this extension, on the other hand, the cursor will stop at each place where the Japanese character type (Hiragana, Katakana, ...) changes.
+With this extension, on the other hand, the cursor will stop at each place
+where the Japanese character type (Hiragana, Katakana, ...) changes.
 
     ‸吾輩は猫である。
           ↓
