@@ -1,6 +1,7 @@
 # Japanese Word Handler
 
 [![Build status](https://ci.appveyor.com/api/projects/status/eqclfgbaefm5npt8/branch/master?svg=true)](https://ci.appveyor.com/project/sgryjp/japanese-word-handler/branch/master)
+&nbsp; [![zlib license](https://img.shields.io/badge/license-zlib-lightgray.svg?longCache=true&style=popout)](https://github.com/sgryjp/japanese-word-handler/blob/master/LICENSE)
 
 An [VS Code](https://code.visualstudio.com) extension providing cursor movement logic which is specifically
 designed for Japanese text.
