@@ -38,48 +38,48 @@
         }
     ],
     "activationEvents": [
-        "onCommand:extension.cursorNextWordEndJa",
-        "onCommand:extension.cursorNextWordEndSelectJa",
-        "onCommand:extension.cursorPrevWordStartJa",
-        "onCommand:extension.cursorPrevWordStartSelectJa",
-        "onCommand:extension.deleteWordRight",
-        "onCommand:extension.deleteWordLeft"
+        "onCommand:japaneseWordHandler.cursorWordEndRight",
+        "onCommand:japaneseWordHandler.cursorWordEndRightSelect",
+        "onCommand:japaneseWordHandler.cursorWordStartLeft",
+        "onCommand:japaneseWordHandler.cursorWordStartLeftSelect",
+        "onCommand:japaneseWordHandler.deleteWordRight",
+        "onCommand:japaneseWordHandler.deleteWordLeft"
     ],
     "main": "./out/extension",
     "contributes": {
         "keybindings": [
             {
-                "command": "extension.cursorNextWordEndJa",
+                "command": "japaneseWordHandler.cursorWordEndRight",
                 "key": "ctrl+right",
                 "mac": "alt+right",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.cursorNextWordEndSelectJa",
+                "command": "japaneseWordHandler.cursorWordEndRightSelect",
                 "key": "ctrl+shift+right",
                 "mac": "alt+shift+right",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.cursorPrevWordStartJa",
+                "command": "japaneseWordHandler.cursorWordStartLeft",
                 "key": "ctrl+left",
                 "mac": "alt+left",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.cursorPrevWordStartSelectJa",
+                "command": "japaneseWordHandler.cursorWordStartLeftSelect",
                 "key": "ctrl+shift+left",
                 "mac": "alt+shift+left",
                 "when": "editorTextFocus"
             },
             {
-                "command": "extension.deleteWordRight",
+                "command": "japaneseWordHandler.deleteWordRight",
                 "key": "ctrl+delete",
                 "mac": "alt+delete",
                 "when": "textInputFocus && !editorReadonly"
             },
             {
-                "command": "extension.deleteWordLeft",
+                "command": "japaneseWordHandler.deleteWordLeft",
                 "key": "ctrl+backspace",
                 "mac": "alt+backspace",
                 "when": "textInputFocus && !editorReadonly"

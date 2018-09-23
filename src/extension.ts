@@ -14,43 +14,43 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     command = vscode.commands.registerCommand(
-        'extension.cursorNextWordEndJa',
+        'japaneseWordHandler.cursorWordEndRight',
         () => {
             let editor = vscode.window.activeTextEditor!;
             let wordSeparators = getWordSeparator(editor);
-            cursorNextWordEndJa(editor, wordSeparators);
+            cursorWordEndRight(editor, wordSeparators);
         });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand(
-        'extension.cursorNextWordEndSelectJa',
+        'japaneseWordHandler.cursorWordEndRightSelect',
         () => {
             let editor = vscode.window.activeTextEditor!;
             let wordSeparators = getWordSeparator(editor);
-            cursorNextWordEndSelectJa(editor, wordSeparators);
+            cursorWordEndRightSelect(editor, wordSeparators);
         });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand(
-        'extension.cursorPrevWordStartJa',
+        'japaneseWordHandler.cursorWordStartLeft',
         () => {
             let editor = vscode.window.activeTextEditor!;
             let wordSeparators = getWordSeparator(editor);
-            cursorPrevWordStartJa(editor, wordSeparators);
+            cursorWordStartLeft(editor, wordSeparators);
         });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand(
-        'extension.cursorPrevWordStartSelectJa',
+        'japaneseWordHandler.cursorWordStartLeftSelect',
         () => {
             let editor = vscode.window.activeTextEditor!;
             let wordSeparators = getWordSeparator(editor);
-            cursorPrevWordStartSelectJa(editor, wordSeparators);
+            cursorWordStartLeftSelect(editor, wordSeparators);
         });
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand(
-        'extension.deleteWordRight',
+        'japaneseWordHandler.deleteWordRight',
         () => {
             let editor = vscode.window.activeTextEditor!;
             let wordSeparators = getWordSeparator(editor);
@@ -59,7 +59,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(command);
 
     command = vscode.commands.registerCommand(
-        'extension.deleteWordLeft',
+        'japaneseWordHandler.deleteWordLeft',
         () => {
             let editor = vscode.window.activeTextEditor!;
             let wordSeparators = getWordSeparator(editor);
@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 //-----------------------------------------------------------------------------
-export function cursorNextWordEndJa(
+export function cursorWordEndRight(
     editor: TextEditor,
     wordSeparators: string
 ) {
@@ -79,7 +79,7 @@ export function cursorNextWordEndJa(
         .map(p => new Selection(p, p));
 }
 
-export function cursorNextWordEndSelectJa(
+export function cursorWordEndRightSelect(
     editor: TextEditor,
     wordSeparators: string
 ) {
@@ -90,7 +90,7 @@ export function cursorNextWordEndSelectJa(
         );
 }
 
-export function cursorPrevWordStartJa(
+export function cursorWordStartLeft(
     editor: TextEditor,
     wordSeparators: string
 ) {
@@ -100,7 +100,7 @@ export function cursorPrevWordStartJa(
         .map(p => new Selection(p, p));
 }
 
-export function cursorPrevWordStartSelectJa(
+export function cursorWordStartLeftSelect(
     editor: TextEditor,
     wordSeparators: string
 ) {
