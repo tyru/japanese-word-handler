@@ -41,7 +41,9 @@
         "onCommand:extension.cursorNextWordEndJa",
         "onCommand:extension.cursorNextWordEndSelectJa",
         "onCommand:extension.cursorPrevWordStartJa",
-        "onCommand:extension.cursorPrevWordStartSelectJa"
+        "onCommand:extension.cursorPrevWordStartSelectJa",
+        "onCommand:extension.deleteWordRight",
+        "onCommand:extension.deleteWordLeft"
     ],
     "main": "./out/extension",
     "contributes": {
@@ -69,6 +71,18 @@
                 "key": "ctrl+shift+left",
                 "mac": "alt+shift+left",
                 "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.deleteWordRight",
+                "key": "ctrl+delete",
+                "mac": "alt+delete",
+                "when": "textInputFocus && !editorReadonly"
+            },
+            {
+                "command": "extension.deleteWordLeft",
+                "key": "ctrl+backspace",
+                "mac": "alt+backspace",
+                "when": "textInputFocus && !editorReadonly"
             }
         ]
     },

@@ -10,6 +10,8 @@ to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 ### Added
 - Multi-cursor support
+- New command `extension.deleteWordRight` with keyboard shortcut <kbd>Ctrl+Delete</kbd>
+- New command `extension.deleteWordLeft` with keyboard shortcut <kbd>Ctrl+Backspace</kbd>
 
 ## [1.0.0] - 2018-05-21
 ### Added

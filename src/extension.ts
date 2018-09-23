@@ -48,6 +48,24 @@ export function activate(context: vscode.ExtensionContext) {
             cursorPrevWordStartSelectJa(editor, wordSeparators);
         });
     context.subscriptions.push(command);
+
+    command = vscode.commands.registerCommand(
+        'extension.deleteWordRight',
+        () => {
+            let editor = vscode.window.activeTextEditor!;
+            let wordSeparators = getWordSeparator(editor);
+            deleteWordRight(editor, wordSeparators);
+        });
+    context.subscriptions.push(command);
+
+    command = vscode.commands.registerCommand(
+        'extension.deleteWordLeft',
+        () => {
+            let editor = vscode.window.activeTextEditor!;
+            let wordSeparators = getWordSeparator(editor);
+            deleteWordLeft(editor, wordSeparators);
+        });
+    context.subscriptions.push(command);
 }
 
 //-----------------------------------------------------------------------------
@@ -91,6 +109,40 @@ export function cursorPrevWordStartSelectJa(
             s.anchor,
             positionOfPrevWordStart(editor.document, s.active, wordSeparators)
         ));
+}
+
+export function deleteWordRight(
+    editor: TextEditor,
+    wordSeparators: string
+) {
+    return editor.edit(e => {
+        const document = editor.document;
+        let selections = editor.selections.map(
+            s => new Selection(
+                s.anchor,
+                positionOfNextWordEnd(document, s.active, wordSeparators)
+            ));
+        for (let selection of selections) {
+            e.delete(selection);
+        }
+    });
+}
+
+export function deleteWordLeft(
+    editor: TextEditor,
+    wordSeparators: string
+) {
+    return editor.edit(e => {
+        const document = editor.document;
+        let selections = editor.selections.map(
+            s => new Selection(
+                s.anchor,
+                positionOfPrevWordStart(document, s.active, wordSeparators)
+            ));
+        for (let selection of selections) {
+            e.delete(selection);
+        }
+    });
 }
 
 //-----------------------------------------------------------------------------
