@@ -1,10 +1,13 @@
 # Japanese Word Handler
 
+[![Version (VS Marketplace)](https://vsmarketplacebadge.apphb.com/version-short/sgryjp.japanese-word-handler.svg)](https://marketplace.visualstudio.com/items?itemName=sgryjp.japanese-word-handler)
+![Rating (VS Marketplace)](https://vsmarketplacebadge.apphb.com/rating-star/sgryjp.japanese-word-handler.svg)
+![Installs (VS Marketplace)](https://vsmarketplacebadge.apphb.com/installs-short/sgryjp.japanese-word-handler.svg)
+&nbsp;
 [![Build status](https://ci.appveyor.com/api/projects/status/eqclfgbaefm5npt8/branch/master?svg=true)](https://ci.appveyor.com/project/sgryjp/japanese-word-handler/branch/master)
-&nbsp; [![zlib license](https://img.shields.io/badge/license-zlib-lightgray.svg?longCache=true&style=popout)](https://github.com/sgryjp/japanese-word-handler/blob/master/LICENSE)
+[![zlib license](https://img.shields.io/badge/license-zlib-lightgray.svg?longCache=true&style=popout)](https://github.com/sgryjp/japanese-word-handler/blob/master/LICENSE)
 
-An [VS Code](https://code.visualstudio.com) extension providing cursor movement logic which is specifically
-designed for Japanese text.
+Better cursor movement in Japanese text for [VS Code](https://code.visualstudio.com).
 
 ## How to activate the logic?
 

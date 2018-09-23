@@ -17,6 +17,16 @@
     "license": "Zlib",
     "badges": [
         {
+            "url": "https://vsmarketplacebadge.apphb.com/rating-short/sgryjp.japanese-word-handler.svg",
+            "href": "https://marketplace.visualstudio.com/items?itemName=sgryjp.japanese-word-handler",
+            "description": "Rating (VS Marketplace)"
+        },
+        {
+            "url": "https://vsmarketplacebadge.apphb.com/installs-short/sgryjp.japanese-word-handler.svg",
+            "href": "https://marketplace.visualstudio.com/items?itemName=sgryjp.japanese-word-handler",
+            "description": "Number of installations (VS Marketplace)"
+        },
+        {
             "url": "https://ci.appveyor.com/api/projects/status/eqclfgbaefm5npt8/branch/master?svg=true",
             "href": "https://ci.appveyor.com/project/sgryjp/japanese-word-handler/branch/master",
             "description": "Build status"
