@@ -7,7 +7,7 @@ The format is based on
 [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) this project adheres
 to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2018-09-24
 ### Added
 - Multi-cursor support
 - New command `japaneseWordHandler.deleteWordRight` with keyboard shortcut <kbd>Ctrl+Delete</kbd>
