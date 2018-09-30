@@ -27,28 +27,16 @@ With the original logic, pressing <kbd>Ctrl+Right</kbd> while the cursor is at
 the beginning of a chunk of Japanese characters will move the cursor to the end
 of it.
 
-    ‸吾輩は猫である。
-          ↓
-    吾輩は猫である。‸
+![Original cursor movement](images/japanese-word-handler-vanilla.gif)
 
 With this extension, on the other hand, the cursor will stop at each place
 where the Japanese character type (Hiragana, Katakana, ...) changes.
 
-    ‸吾輩は猫である。
-          ↓
-    吾輩‸は猫である。
-          ↓
-    吾輩は‸猫である。
-          ↓
-    吾輩は猫‸である。
-          ↓
-    吾輩は猫である‸。
-          ↓
-    吾輩は猫である。‸
+![Improved cursor movement](images/japanese-word-handler.gif)
 
 ## Known limitations
 
-As of VSCode 0.10.10, extension cannot override word related actions below:
+As of VSCode 1.27, extension cannot override word related actions below:
 
 * Word selection on double click
 * Automatic highlight of a word at where the cursor is
