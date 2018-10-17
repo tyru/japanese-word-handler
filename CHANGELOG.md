@@ -8,6 +8,10 @@ The format is based on
 to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Fixed
+- Now scrolls the window so that the cursor is always visible except when there are multiple cursors
+
+## [1.1.0] - 2018-09-24
 ### Added
 - Multi-cursor support
 - New command `extension.deleteWordRight` with keyboard shortcut <kbd>Ctrl+Delete</kbd>

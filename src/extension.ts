@@ -77,6 +77,9 @@ export function cursorNextWordEndJa(
     editor.selections = editor.selections
         .map(s => positionOfNextWordEnd(document, s.active, wordSeparators))
         .map(p => new Selection(p, p));
+    if (editor.selections.length === 1) {
+        editor.revealRange(editor.selection);
+    }
 }
 
 export function cursorNextWordEndSelectJa(
@@ -88,6 +91,9 @@ export function cursorNextWordEndSelectJa(
             s.anchor,
             positionOfNextWordEnd(editor.document, s.active, wordSeparators))
         );
+    if (editor.selections.length === 1) {
+        editor.revealRange(editor.selection);
+    }
 }
 
 export function cursorPrevWordStartJa(
@@ -98,6 +104,9 @@ export function cursorPrevWordStartJa(
     editor.selections = editor.selections
         .map(s => positionOfPrevWordStart(document, s.active, wordSeparators))
         .map(p => new Selection(p, p));
+    if (editor.selections.length === 1) {
+        editor.revealRange(editor.selection);
+    }
 }
 
 export function cursorPrevWordStartSelectJa(
@@ -109,6 +118,9 @@ export function cursorPrevWordStartSelectJa(
             s.anchor,
             positionOfPrevWordStart(editor.document, s.active, wordSeparators)
         ));
+    if (editor.selections.length === 1) {
+        editor.revealRange(editor.selection);
+    }
 }
 
 export function deleteWordRight(
@@ -124,6 +136,10 @@ export function deleteWordRight(
             ));
         for (let selection of selections) {
             e.delete(selection);
+        }
+    }).then(() => {
+        if (editor.selections.length === 1) {
+            editor.revealRange(editor.selection);
         }
     });
 }
@@ -141,6 +157,10 @@ export function deleteWordLeft(
             ));
         for (let selection of selections) {
             e.delete(selection);
+        }
+    }).then(() => {
+        if (editor.selections.length === 1) {
+            editor.revealRange(editor.selection);
         }
     });
 }
