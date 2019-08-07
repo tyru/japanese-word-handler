@@ -1,7 +1,7 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import { Position, Range, Selection, TextDocument, TextEditor } from 'vscode';
+import { Position, Range, Selection, TextDocument, TextEditor, TextEditorSelectionChangeEvent, Hover } from 'vscode';
 
 //-----------------------------------------------------------------------------
 export function activate(context: vscode.ExtensionContext) {
@@ -66,6 +66,40 @@ export function activate(context: vscode.ExtensionContext) {
             deleteWordLeft(editor, wordSeparators);
         });
     context.subscriptions.push(command);
+
+    let prevHoveredPosition: Position | null = null;
+    vscode.languages.registerHoverProvider({ pattern: '*' }, {
+        provideHover(document, position, token) {
+            prevHoveredPosition = position;
+            return null;
+        }
+    });
+    vscode.window.onDidChangeTextEditorSelection(async (e: TextEditorSelectionChangeEvent) => {
+        const editor = e.textEditor;
+        if (e.kind != vscode.TextEditorSelectionChangeKind.Mouse || !prevHoveredPosition ||
+            editor.selections.length !== 1 || editor.selection.isEmpty) {
+            return;
+        }
+        const document = editor.document;
+        const wordSeparators = getWordSeparator(editor);
+        editor.selection = new Selection(
+            atClassBoundary(document, prevHoveredPosition, wordSeparators) ?
+                prevHoveredPosition :
+                positionOfPrevWordStart(document, prevHoveredPosition, wordSeparators),
+            positionOfNextWordEnd(document, prevHoveredPosition, wordSeparators)
+        );
+    });
+}
+
+function atClassBoundary(
+    doc: TextDocument,
+    pos: Position,
+    wordSeparators: string
+) {
+    if (pos.character === 0) return false;
+    const classify = makeClassifier(wordSeparators);
+    const prevPos = new Position(pos.line, pos.character - 1);
+    return classify(doc, pos) !== classify(doc, prevPos);
 }
 
 //-----------------------------------------------------------------------------
